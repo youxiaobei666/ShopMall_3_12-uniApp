@@ -15,7 +15,7 @@
 			"",
 			"</style>"
 		],
-		"description": "base vue3"
+		"description": "base vue3",
 		"prefix": "vue3",
 		"scope": "text.html.vue ! expression"
 	}
