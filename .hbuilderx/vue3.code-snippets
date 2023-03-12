@@ -1,0 +1,22 @@
+{
+	"Vue3": {
+		"body": [
+			"<template>",
+			"\t<${1:div}>",
+			"",
+			"\t</${1:div}>",
+			"</template>",
+			"",
+			"<script setup>",
+			"\t"
+			"</script>",
+			"",
+			"<style scoped>",
+			"",
+			"</style>"
+		],
+		"description": "base vue3"
+		"prefix": "vue3",
+		"scope": "text.html.vue ! expression"
+	}
+}
