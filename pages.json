@@ -1,56 +1,56 @@
 {
-	"pages": [
-		{
-            "path" : "pages/home/home",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "首页",
-                "enablePullDownRefresh": false
-            }
-            
-        },
-		{
-		    "path" : "pages/cate/cate",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "商城",
-		        "enablePullDownRefresh": false
-		    }
-		    
+	"pages": [{
+			"path": "pages/home/home",
+			"style": {
+				"navigationBarTitleText": "首页",
+				"enablePullDownRefresh": false
+			}
+
 		},
 		{
-		    "path" : "pages/discont/discont",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "优惠券",
-		        "enablePullDownRefresh": false
-		    }
-		    
+			"path": "pages/cate/cate",
+			"style": {
+				"navigationBarTitleText": "商城",
+				"enablePullDownRefresh": false
+			}
+
 		},
 		{
-		    "path" : "pages/cart/cart",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "购物车",
-		        "enablePullDownRefresh": false
-		    }
-		    
+			"path": "pages/discont/discont",
+			"style": {
+				"navigationBarTitleText": "优惠券",
+				"enablePullDownRefresh": false
+			}
+
 		},
 		{
-		    "path" : "pages/mine/mine",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "我的",
-		        "enablePullDownRefresh": false
-		    }
-		    
+			"path": "pages/cart/cart",
+			"style": {
+				"navigationBarTitleText": "购物车",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "unpackage/good_detail/good_detail",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
 		}
-    ],
+	],
 	"tabBar": {
 		"selectedColor": "#1296db",
 		"color": "#656565",
-		"list": [
-			{
+		"list": [{
 				"pagePath": "pages/home/home",
 				"text": "主页",
 				"iconPath": "static/tabbar_icon/home.png",
@@ -90,5 +90,17 @@
 		"app-plus": {
 			"background": "#efeff4"
 		}
-	}
+	},
+	"subPackages": [{
+		"root": "subPackage",
+		"pages": [
+			{
+				"path": "good_detail/good_detail",
+				"style": {
+					"navigationBarTitleText": "商品详情",
+					"enablePullDownRefresh": false
+				}
+			}
+		]
+	}]
 }
