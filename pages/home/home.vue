@@ -37,11 +37,11 @@
 				</view>
 				<view class="main-right" >
 					<!-- 避免在同一个标签上同时使用 v-if > v-for -->
-					<view v-for="(item2,index2) in item.product_list" :key="index2">
+					<template v-for="(item2,index2) in item.product_list" :key="index2">
 						<view class="right-img-box" v-if="index2>0">
 							<image class="right-img" :src="item2.image_src" mode="aspectFill" ></image>
 						</view>
-					</view>
+					</template>
 				</view>
 			</view>
 		</view>
