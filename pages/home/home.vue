@@ -1,4 +1,5 @@
 <template>
+	<you-search></you-search>
 	<!-- 轮播图 -->
 	<swiper
 		class="swiper-container"
@@ -9,6 +10,7 @@
 		:interval="3000"
 		:duration="1000"
 		circular="true"
+		@click="toCatePage()"
 	>
 		<swiper-item v-for="(item, index) in swiperList" :key="index">
 			<navigator class="swiper-item" :url="'/subPackage/good_detail/good_detail' + item.id">

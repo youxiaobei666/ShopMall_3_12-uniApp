@@ -1,4 +1,7 @@
 <template>
+	<!-- 搜索框 -->
+	<you-search></you-search>
+	<!-- 分类 -->
 	<view class="scroll-container">
 		<!-- 左边部分 -->
 		<scroll-view class="scroll-left" scroll-y="true" scroll :style="{ height: windowHeight + 'px' }">
@@ -77,15 +80,18 @@ onShow(() => {
 <style lang="scss">
 .scroll-container {
 	display: flex;
+	
 	.scroll-left {
 		box-sizing: border-box;
 		// border: #8a8a8a solid 2px;
-
-		width: 120px;
+		color: #303030;
+		font-weight: 300;
+		font-size: 14px;
+		width: 100px;
 		.left-item {
 			box-sizing: border-box;
 			height: 50px;
-			width: 120px;
+			width: 100px;
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -95,13 +101,14 @@ onShow(() => {
 	.scroll-right {
 		// border: red 2px solid;
 		text-align: center;
+		background-color: #fff;
 		.right-item {
-			font-weight: 500;
+			font-weight: 400;
 			font-size: 15px;
 			// border-bottom: #1296db solid 1px;
 			width: 100%;
 			// height: 400px;
-			margin-bottom: 10px;
+			margin: 10px 0;
 			.right-item-text {
 				// border: red solid 2px;
 				box-sizing: border-box;
@@ -117,7 +124,7 @@ onShow(() => {
 					height: 80px;
 					.text {
 						font-size: 12px;
-						font-weight: 400;
+						font-weight: 300;
 						margin-bottom: 10px;
 					}
 					.image {
@@ -131,5 +138,7 @@ onShow(() => {
 }
 .active {
 	border-left: #1296db solid 4px !important;
+	background-color: #fff;
+	color: #1296db;
 }
 </style>
