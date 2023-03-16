@@ -62,6 +62,9 @@ const titleTap = index => {
 	defaultActive.value = index
 	console.log()
 	cateListTwo.value = cateList.value[index].children
+	// 尝试获取下一个元素
+	console.log(uni.createSelectorQuery('active'));
+	
 }
 
 /**
@@ -80,7 +83,7 @@ onShow(() => {
 <style lang="scss">
 .scroll-container {
 	display: flex;
-	
+	background-color: #fff;
 	.scroll-left {
 		box-sizing: border-box;
 		// border: #8a8a8a solid 2px;
@@ -88,6 +91,7 @@ onShow(() => {
 		font-weight: 300;
 		font-size: 14px;
 		width: 100px;
+	
 		.left-item {
 			box-sizing: border-box;
 			height: 50px;
@@ -96,6 +100,7 @@ onShow(() => {
 			justify-content: center;
 			align-items: center;
 			border-left: rgba(1, 1, 1, 0) solid 4px; // 透明边框站位仿制文字移动
+		    background-color: #f5f5f5;
 		}
 	}
 	.scroll-right {
@@ -138,7 +143,18 @@ onShow(() => {
 }
 .active {
 	border-left: #1296db solid 4px !important;
-	background-color: #fff;
+	background-color: #fff !important;
 	color: #1296db;
+	transition: .2s ease;
+	
 }
+
+.active + view {
+	// background-color: red;
+	border-radius: 0 20px 0 0;
+	overflow: hidden;
+	// background-color: #1296db;
+	transition: .2s ease;
+}
+
 </style>
