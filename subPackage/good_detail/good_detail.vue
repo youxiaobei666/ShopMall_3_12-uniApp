@@ -4,14 +4,8 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				
-			};
-		}
-	}
+<script setup>
+	console.log(getCurrentPages());
 </script>
 
 <style lang="scss">
