@@ -41,7 +41,7 @@
 					<!-- 避免在同一个标签上同时使用 v-if > v-for -->
 					<template v-for="(item2,index2) in item.product_list" :key="index2">
 						<view class="right-img-box" v-if="index2>0">
-							<image class="right-img" :src="item2.image_src" mode="aspectFill" ></image>
+							<image class="right-img" :src="item2.image_src" mode="aspectFit" ></image>
 						</view>
 					</template>
 				</view>
@@ -156,6 +156,7 @@ onShow(() => {
 		height: 230px;
 		width: 100%;
 		display: flex;
+		box-sizing: border-box;
 		flex-direction: column;
 		justify-content: flex-start;
 		.floor-header {
@@ -173,37 +174,46 @@ onShow(() => {
 			width: 100%;
 			display: flex;
 			justify-content: space-around;
+			// 左边的盒子
 			.main-left {
+				flex: 1;
 				// border: blue solid 2px;
 				// flex: 1;
 				height: 200px;
-				width: 310px;
+				// width: 310px;
 				box-sizing: border-box;
 				padding: 5px;
 				.left-img {
 					width: 100%;
 					height: 100%;
+					
 				}
 			}
+			// 右边的盒子
 			.main-right {
+				flex: 2;
 				// border: goldenrod solid 2px;
 				// flex: 2;
-				height: 100%;
-				width: 600px;
+				height: 200px;
+				// width: 700px;
 				display: flex;
 				flex-wrap: wrap;
-				justify-content: space-around;
-				
+				box-sizing: border-box;
+				// justify-content: space-around;
+				// 右边的图片容器
 				.right-img-box {
 					// border: green solid 3px;
 					// flex: 1;
-					width: 120px;
-					height: 100px;
+					width: 220rpx;
+					height: 200rpx;
 					padding: 5px;
+					padding-right: 0;
 					box-sizing: border-box;
+					// 里面的小图片
 					.right-img {
 						width: 100%;
 						height: 100%;
+						// padding: 4px;
 					}
 				}
 			}
