@@ -1,19 +1,16 @@
 <template>
-	<view>
-		mine
-	</view>
+	<view>mine</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				
-			};
-		}
-	}
+<script setup>
+import { onShow } from '@dcloudio/uni-app'
+import tabbarInfo from '../../utils/tabbar_info.js'
+/**
+ * onShow
+ */
+onShow(() => {
+	tabbarInfo() // 购物车图标
+})
 </script>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

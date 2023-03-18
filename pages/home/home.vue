@@ -21,33 +21,26 @@
 	<!-- 导航条 -->
 	<view class="nav-list">
 		<view class="nav-item" v-for="(item, index) in navList" :key="index">
-			<view class="nav-img"><image class="nav-img-inner" @click="toCatePage(item.name)" :src="item.image_src"  mode="aspectFit"></image></view>
+			<view class="nav-img"><image class="nav-img-inner" @click="toCatePage(item.name)" :src="item.image_src" mode="aspectFit"></image></view>
 		</view>
 	</view>
-    
+
 	<!-- 楼层 -->
-	<view class="floor-container" v-for="(item,index) in floorList" :key="index" @click="toCatePage()">
+	<view class="floor-container" v-for="(item, index) in floorList" :key="index" @click="toCatePage()">
 		<view class="floor-item">
 			<!-- header -->
-			<view class="floor-header">
-				<image class="header-image" :src="item.floor_title.image_src" mode="aspectFit"></image>
-			</view>
+			<view class="floor-header"><image class="header-image" :src="item.floor_title.image_src" mode="aspectFit"></image></view>
 			<!-- main -->
 			<view class="floor-main">
-				<view class="main-left">
-					<image class="left-img" :src="item.product_list[0].image_src" mode="aspectFill"></image>
-				</view>
-				<view class="main-right" >
+				<view class="main-left"><image class="left-img" :src="item.product_list[0].image_src" mode="aspectFill"></image></view>
+				<view class="main-right">
 					<!-- 避免在同一个标签上同时使用 v-if > v-for -->
-					<template v-for="(item2,index2) in item.product_list" :key="index2">
-						<view class="right-img-box" v-if="index2>0">
-							<image class="right-img" :src="item2.image_src" mode="aspectFit" ></image>
-						</view>
+					<template v-for="(item2, index2) in item.product_list" :key="index2">
+						<view class="right-img-box" v-if="index2 > 0"><image class="right-img" :src="item2.image_src" mode="aspectFit"></image></view>
 					</template>
 				</view>
 			</view>
 		</view>
-		
 	</view>
 </template>
 
@@ -55,6 +48,7 @@
 import reqFail from '../../utils/requestFail.js'
 import { computed, getCurrentInstance, onBeforeMount, ref } from 'vue'
 import { onShow, onReady } from '@dcloudio/uni-app'
+import tabbarInfo from '../../utils/tabbar_info.js'
 
 /**
  * 以下定义数据
@@ -87,28 +81,29 @@ const floorList = ref()
  * 以下定义方法
  */
 // 跳转'分类'的方法 swith 判断
-const toCatePage = (payload)=>{
-	if(payload) {
+const toCatePage = payload => {
+	if (payload) {
 		switch (payload) {
-			case '分类': uni.switchTab({
-				url:'/pages/cate/cate'
-			}); break;
+			case '分类':
+				uni.switchTab({
+					url: '/pages/cate/cate'
+				})
+				break
 		}
 	} else {
 		uni.switchTab({
-			url:'/pages/cate/cate'
+			url: '/pages/cate/cate'
 		})
 	}
 }
 
 // 请求导航列表的数据
-const getNavList = ()=>{
+const getNavList = () => {
 	uni.request({
 		url: 'https://api-hmugo-web.itheima.net/api/public/v1/home/catitems',
 		method: 'GET',
 		success(res) {
 			navList.value = res.data.message
-			console.log(navList.value)
 		},
 		fail() {
 			reqFail() // 请求失败模块
@@ -116,14 +111,12 @@ const getNavList = ()=>{
 	})
 }
 // 楼层的请求方法
-const getFloorList = ()=>{
+const getFloorList = () => {
 	uni.request({
-		url:'https://api-hmugo-web.itheima.net/api/public/v1/home/floordata',
-		method:'GET',
+		url: 'https://api-hmugo-web.itheima.net/api/public/v1/home/floordata',
+		method: 'GET',
 		success(res) {
-			console.log(res.data.message);
 			floorList.value = res.data.message
-			console.log(floorList.value);
 		},
 		fail() {
 			reqFail()
@@ -135,10 +128,11 @@ const getFloorList = ()=>{
  * Show生命周期
  */
 onShow(() => {
+	tabbarInfo()// 购物车图标
 	/**
 	 * 请求主页数据
 	 */
-    getNavList() // nav
+	getNavList() // nav
 	getFloorList() // floor
 })
 </script>
@@ -186,7 +180,6 @@ onShow(() => {
 				.left-img {
 					width: 100%;
 					height: 100%;
-					
 				}
 			}
 			// 右边的盒子
@@ -219,9 +212,8 @@ onShow(() => {
 			}
 		}
 	}
-	
-}	
-	
+}
+
 .nav-list {
 	width: 95vw;
 	height: 100px;

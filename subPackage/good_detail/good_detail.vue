@@ -20,29 +20,25 @@
 	<!-- 详情区域 -->
 	<rich-text :nodes="goods_info.goods_introduce"></rich-text>
 	<!-- 购物车选购底部 -->
-	<view class="footer"><uni-goods-nav :fill="true" :options="options" :button-group="customButtonGroup" @click="leftAction" @buttonClick="rightAction"/></view>
+	<view class="footer"><uni-goods-nav :fill="true" :options="options" :button-group="customButtonGroup" @click="leftAction" @buttonClick="rightAction" /></view>
 </template>
 
 <script setup>
-import { getCurrentInstance, ref } from 'vue'
+import { computed, getCurrentInstance, ref, watch } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
 import reqFail from '../../utils/requestFail'
+import store from '../../store/index.js'
+
 // 定义id
 const goods_id = ref(null)
 // 定义 数据
 const goods_info = ref(null)
-// 定义 底部数据
-
-
-
 
 // 定义获取id 的方法
 const getGoodId = () => {
 	// 获取页面参数
 	const instans = getCurrentPages() // 实例
 	goods_id.value = instans[instans.length - 1].options.goods_id
-	console.log(instans);
-	console.log("参数" + goods_id.value);
 }
 // 定义请求数据的方法
 const getDetail = () => {
@@ -51,7 +47,6 @@ const getDetail = () => {
 		method: 'GET',
 		success(res) {
 			goods_info.value = res.data.message
-			console.log(goods_info.value)
 		},
 		fail() {
 			reqFail()
@@ -72,7 +67,8 @@ const preview = i => {
 /**
  * 底部的购物导航
  */
-const options = ref([ // 左边的info
+const options = ref([
+	// 左边的info
 	{
 		icon: 'shop',
 		text: '店铺'
@@ -83,7 +79,8 @@ const options = ref([ // 左边的info
 		info: 0
 	}
 ])
-const customButtonGroup = ref([ // 右边的info
+const customButtonGroup = ref([
+	// 右边的info
 	{
 		text: '加入购物车',
 		backgroundColor: '#ffa200',
@@ -95,8 +92,9 @@ const customButtonGroup = ref([ // 右边的info
 		color: '#fff'
 	}
 ])
-const leftAction = (e)=>{ // 左边的点击事件
-	if(e.content.text === '店铺') {
+const leftAction = e => {
+	// 左边的点击事件
+	if (e.content.text === '店铺') {
 		// 去商品所在的店铺
 	} else {
 		// 跳转购物车
@@ -105,14 +103,43 @@ const leftAction = (e)=>{ // 左边的点击事件
 		})
 	}
 }
-const rightAction = (e)=>{
-	if(e.content.text === '加入购物车') {
-		// 选择规格和提示
-		// options.value[1].info ++
+const rightAction = e => {
+	if (e.content.text === '加入购物车') {
+		// 获取商品数据
+		let goods_id = goods_info.value.goods_id
+		let goods_name = goods_info.value.goods_name
+		let goods_price = goods_info.value.goods_price
+		let goods_count = 1 // 每次添加都是一个
+		let goods_small_logo = goods_info.value.goods_small_logo
+		let goods_state = goods_info.value.goods_state
+		// 组成对象
+		let goodsListItem = {
+			goods_id,
+			goods_name,
+			goods_price,
+			goods_count,
+			goods_small_logo,
+			goods_state
+		}
+		// 发送给 store
+		store.commit('pushList', goodsListItem)
 	} else {
 		// 立即购买
 	}
 }
+
+// 监听并且获取info总数
+const total = computed(() => {
+	return store.getters.totalCount
+})
+watch(
+	total,
+	newInfo => {
+		// 监听到变化，给info赋值
+		options.value[1].info = newInfo	
+	},
+	{ immediate: true }
+)
 
 /**
  * onShow

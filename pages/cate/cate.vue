@@ -29,6 +29,7 @@
 import { ref } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
 import reqFail from '../../utils/requestFail.js'
+import tabbarInfo from '../../utils/tabbar_info.js'
 
 // 窗口高度
 const windowHeight = ref(670)
@@ -71,6 +72,7 @@ const titleTap = index => {
  * onShow
  */
 onShow(() => {
+	tabbarInfo()// 购物车图标
 	// 样式：获取窗口高度
 	windowHeight.value = uni.getSystemInfoSync().windowHeight
 	windowWidth.value = uni.getSystemInfoSync().windowWidth
