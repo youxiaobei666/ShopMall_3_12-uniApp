@@ -9,13 +9,11 @@
 		<!-- 列表 -->
 		<scroll-view scroll-y="true" style="height: 600px;">
 			<view class="cart-item" v-for="(item,index) in goodsList" :key="index">
-				<!-- radio -->
-				<!-- <view class="radio">
-					<radio-group @change="radioChange">
-					 <label for=""> <radio  color="#1296db"  value= '0' :id='item.goods_id' :checked="item.goods_state" @click="radioTap">不选</radio></label>
-					  <radio  color="#1296db"  value= '1' :id='item.goods_id' :checked="item.goods_state" @click="radioTap"></radio>
-					</radio-group>
-				</view> -->
+				<!-- check -->
+				<view class="check">
+					<!--  循环给每个单选框渲染状态 -->
+					<checkbox :checked="item.goods_state === 2 ? true : false" color="#1296db" :id="item.goods_id" @click="oneChecked"></checkbox>
+				</view>
 				<!-- img -->
 				<view class="logo">
 					<image class="image" :src="item.goods_small_logo" mode="aspectFill"></image>
@@ -40,14 +38,15 @@
 		</scroll-view>
 		<!-- 全选合计支付 -->
 		<view class="footer">
-			<view class="radio">
-				<radio color="#1296db" checked='1'></radio>
-				全选
+			<view class="AllCheck">
+				<label> 
+					<checkbox :checked='controlAllChecked' color="#1296db" @click="checkAllHandle"/><text>全选</text>
+				</label>
 			</view>
 			<view class="total">
 				合计：¥ {{totalPrice}}
 			</view>
-			<view class="pay-box">
+			<view class="pay-box" @click="toPay">
 				结算({{totalNumber}})
 			</view>
 		</view>
@@ -55,10 +54,81 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import {onShow} from '@dcloudio/uni-app'
 import store from '../../store/index.js'
 import tabbarInfo from '../../utils/tabbar_info.js'
+
+// 支付
+const toPay = ()=>{
+	// 支付
+}
+
+// 获取是否  全选的状态
+const controlAllChecked = computed(()=>{
+	if (store.getters.checkAll === -1) { // 只要没有state 为 2的 
+		return true // 全选
+	} else {
+		return false
+	}
+})
+
+// 主动控制 全选按钮的变化,随之控制 单选
+let flagAll = true
+const checkAllHandle = ()=>{
+	if(flagAll === true) {
+		// 把所有的state 赋值为 1 ，1是不选
+		store.commit("noOneCheck")
+		flagAll = !flagAll 
+	} else {
+		// 把所有的 state = 2,2 是选
+		store.commit('allCheck')
+		flagAll = !flagAll 
+	}
+	
+}
+
+
+// 商品单选函数
+let flag = true
+let oldId = null
+const oneChecked = (e)=>{
+  // 点击后清空为0
+  // 再点，把原来旧值的数字放回去
+  const id = parseInt(e.currentTarget.id) // 获取点击的id
+  
+  // 判断是不是一样的 id 
+  if(id === oldId) {
+	  // 一样，正常，
+	  // 获取index
+	  const index = store.state.cart.goodsList.findIndex(item=>item.goods_id === id)
+	  store.commit('saveId',id) // id 上传 store
+	  const oldVal = JSON.parse(uni.getStorageSync('goodsList'))[index].goods_count // 转为数组
+	  if(flag) {
+	  	   store.commit('clearCount',e.currentTarget.id) // 第一次点
+	  	   flag= !flag
+	  } else {
+	  	 store.commit('rebackCount',oldVal)
+	  	 flag= !flag
+	  }
+  }else {
+	  flag = true
+	  // 不一样，重置flag 为 true
+	  const index = store.state.cart.goodsList.findIndex(item=>item.goods_id === id)
+	  store.commit('saveId',id) // id 上传 store
+	  const oldVal = JSON.parse(uni.getStorageSync('goodsList'))[index].goods_count // 转为数组
+	  if(flag) {
+	  	   store.commit('clearCount',e.currentTarget.id) // 第一次点
+	  	   flag= !flag
+	  } else {
+	  	 store.commit('rebackCount',oldVal)
+	  	 flag= !flag
+	  }
+  }
+  
+  
+  oldId = id // 保存这次的id ,两次不一样重置 flag 为 true
+}
 
 
 // 减方法
@@ -123,7 +193,7 @@ onShow(()=>{
 	}
 	.cart-item {
 		width: 100%;
-		height: 100px;
+		height: 120px;
 		// border: blue solid 1px;
 		box-sizing: border-box;
 		display: flex;
@@ -175,11 +245,11 @@ onShow(()=>{
 		justify-content: space-between;
 		align-items: center;
 		height: 60px;
-		position: fixed;
+		position: sticky;
 		width: 100%;
 		bottom: 0;
 		background-color: #f5f5f5;
-		.radio {
+		.AllCheck {
 			font-size: 14px;
 			margin-left: 5px;
 		}
