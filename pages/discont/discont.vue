@@ -1,6 +1,6 @@
 <template>
 	<!-- 头部滚动 -->
-	<scroll-view scroll-x="true" class="header">
+	<scroll-view scroll-x="true" show-scrollbar="false" class="header">
 		<view enable-flex="true" v-for="(item, index) in headerList" :key="index" :id="index" @click="tapHeader" :class="['header-item', item.active === 'yes' ? 'active' : '']">
 			{{ item.name }}
 		</view>
@@ -11,7 +11,7 @@
 		<uni-icons class="icon1" color="#1296db" type="forward"></uni-icons>
 	</uni-card>
 	<!-- card-item -->
-	<view class="card-item" v-for="(item,index) in [1,1,1,1,1]" :key="index">
+	<view class="card-item" v-for="(item,index) in dataList" :key="index">
 		<!-- newGET -->
 		<view class="image">
 			<image class="icon" src="../../static/imags/getNew.png" mode=""></image>
@@ -19,15 +19,14 @@
 		<!-- 左 -->
 		<view class="left">
 			<text>¥</text>
-			<text class="price">20</text>
+			<text class="price">{{item.price}}</text>
 		</view>
 		<!-- 中 -->
 		<view class="center">
-			每日拼团活动商品可用
-			请及时使用
+			{{item.text}}
 			<view class="time">
 				<text style="font-size: 14px;">仅剩 </text>
-				<text style="font-size: 16px; font-weight: 800;">05:02:12</text>
+				<text style="font-size: 16px; font-weight: 800;">{{item.time}}</text>
 			</view>
 		</view>
 		<!-- 右 -->
@@ -67,6 +66,30 @@ const headerList = ref([
 	}
 ])
 
+const dataList = ref([
+	{
+		price: 19,
+		text: '每日拼团商品的专属优惠券，请在当日使用',
+		time: '12:22:00'
+	},{
+		price: 46,
+		text: '仅限电子商品和数码商品使用，请注意',
+		time: '09:20:10'
+	},{
+		price: '5',
+		text: '仅限生鲜和果蔬商品使用，请注意',
+		time: '1:33:50'
+	},{
+		price: 10,
+		text: '通用优惠券，可在任何时间使用',
+		time: '不限'
+	},{
+		price: 30,
+		text: '新用户专属无门槛优惠券',
+		time: '08:28:17'
+	},
+	
+])
 // 头部点击事件
 
 // 头部点击
@@ -131,7 +154,7 @@ onShow(() => {
 	position: relative;
 	justify-content: space-around;
 	align-items: center;
-	width: 360px;
+	width: 92%;
 	height: 120px;
 	// border: #1296db solid 1px;
 	box-sizing: border-box;
@@ -163,8 +186,9 @@ onShow(() => {
 			height: 100px;
 		}
 		.price {
-			font-size: 50px;
+			font-size: 40px;
 			font-weight: 800;
+			padding-left: 5px;
 		}
 	}
 	.center {
@@ -188,7 +212,7 @@ onShow(() => {
 		align-items: center;
 		padding-right: 10px;
 		.btn {
-			background-color: #f1bf42;
+			background-color: #1296db;
 			width: 80px;
 			height: 34px;
 			border-radius: 5px;
