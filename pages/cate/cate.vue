@@ -64,8 +64,6 @@ const titleTap = index => {
 	console.log()
 	cateListTwo.value = cateList.value[index].children
 	// 尝试获取下一个元素
-	console.log(uni.createSelectorQuery('active'));
-	
 }
 
 /**
